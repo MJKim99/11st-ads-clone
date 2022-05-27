@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${ad.title}">Title</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${ad.title}">Title</h1>
+    <div class="main-form">
+        <form name="frm" action="updateOk" method="post" onsubmit="return chkSubmit()">
+            <input type="hidden" name="uid" th:value="${ad.uid}"/>
+            <select name="category" id="cg-select" class="right">
+                <option value="공통" th:selected="${ad.category} == '공통'">공통</option>
+                <option value="포커스클릭" th:selected="${ad.category} == '포커스클릭'">포커스클릭</option>
+                <option value="브랜딩광고" th:selected="${ad.category} == '브랜딩광고'">브랜딩광고</option>
+                <option value="전시입찰광고" th:selected="${ad.category} == '전시입찰광고'">전시입찰광고</option>
+                <option value="리스팅광고" th:selected="${ad.category} == '리스팅광고'">리스팅광고</option>
+                <option value="오늘의PICK" th:selected="${ad.category} == '오늘의PICK'">오늘의PICK</option>
+            </select>
+            <select name="subCate" id="sub-cg-select" class="right">
+                <option value="교육" th:selected="${ad.subCate} == '교육'">교육</option>
+                <option value="마케팅" th:selected="${ad.subCate} == '마케팅'">마케팅</option>
+                <option value="상품" th:selected="${ad.subCate} == '상품'">상품</option>
+                <option value="플랫폼" th:selected="${ad.subCate} == '플랫폼'">플랫폼</option>
+                <option value="약관" th:selected="${ad.subCate} == '약관'">약관</option>
+                <option value="기타" th:selected="${ad.subCate} == '기타'">기타</option>
+            </select><br><br>
+            <label for="title" class="sub-title">제목</label><br>
+            <input type="text" id="title" name="title" th:value="${ad.title}"/><br><br>
+            <label for="content" class="sub-title">내용</label><br>
+            <textarea id="content" name="content" th:value="${ad.content}" th:text="${ad.content}"></textarea>
+            <br>
+            <button type="submit" class="main-btn right" onclick="history.back()">수정</button>
+        </form>
+        <button class="main-btn left" type="button" th:onclick="|location.href='@{view?uid=${ad.uid})}'|">취소</button>
+    </div>
+</main>
+
+<script>
+function chkSubmit() {
+	const frm = document.forms['frm'];
+	const content = frm['content'].value.trim();
+	if (content == "") {
+		alert("내용은 반드시 입력해야 합니다.");
+		frm['content'].focus();
+		return false;
+	}
+	return true;
+}
+</script>
+</body>
+</html>

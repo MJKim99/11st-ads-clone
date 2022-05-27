@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const result = [[${result}]];
+
+    if (result == 0) {
+        alert("삭제 실패");
+        history.back();
+    } else {
+        location.href="list";
+    }
+    /*]]>*/
+</script>
+</html>

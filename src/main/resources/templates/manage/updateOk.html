@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const result = [[${result}]];
+    const uid = [[${uid}]];
+
+    if (result == 0) {
+        alert("수정 실패");
+        history.back();
+    } else {
+        location.href="view?uid=" + uid;
+    }
+    /*]]>*/
+</script>
+</html>

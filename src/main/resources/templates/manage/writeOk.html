@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const uid = [[${uid}]];
+    const result = [[${result}]];
+
+    if (result == 0) {
+        alert("등록 실패");
+        location.href="list";
+    } else {
+        location.href="view?uid=" + uid;
+    }
+    /*]]>*/
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>광고운영</title>
+    <style>
+        table { width: 100%; border-collapse: collapse;}
+        th,td { border: 1px solid black; }
+
+    </style>
+</head>
+<body>
+    <header>
+    </header>
+    <nav>
+        <ul class="nav-ul">
+            <li class="nav-li"><a href="#">11번가</a></li>
+            <li class="nav-li"><a href="#">광고소개</a></li>
+            <li class="nav-li"><a href="#">광고자료</a></li>
+            <li class="nav-li now"><a href="#">광고운영</a></li>
+            <li class="nav-li"><a href="#">광고플랫폼</a></li>
+            <li class="nav-li"><a href="#">광고제안</a></li>
+<!--            <li class="nav-li"><a href="#">검색</a></li>-->
+        </ul>
+    </nav>
+    <main>
+        <h1>광고소식</h1>
+        <h3>11번가 광고의 다양한 소식을 확인하세요.</h3>
+        <input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력하세요" onkeyup="enterKey();"/>
+        <button type="button" onclick="search();">검색</button>
+        <br>
+        <!-- <div class="clear"></div>
+        <nav>
+            <ul class="main-nav-ul">
+                <li class="main-nav-li"><a href="#">전체</a></li>
+                <li class="main-nav-li"><a href="#">공통</a></li>
+                <li class="main-nav-li"><a href="#">포커스클릭</a></li>
+                <li class="main-nav-li"><a href="#">브랜딩광고</a></li>
+                <li class="main-nav-li"><a href="#">전시입찰광고</a></li>
+                <li class="main-nav-li"><a href="#">리스팅광고</a></li>
+                <li class="main-nav-li"><a href="#">오늘의PICK</a></li>
+            </ul>
+        </nav> -->
+        <br>
+        <div class="main-table">
+            <table>
+                <tr>
+                    <th>상품</th>
+                    <th>구분</th>
+                    <th>제목</th>
+                    <th>등록일자</th>
+                </tr>
+                <h3 th:if="${#lists.size(list) == 0}">작성된 글이 없습니다.</h3>
+                <tr th:unless="${#lists.size(list) == 0}" th:each="ad : ${list}">
+                    <td th:text="${ad.category}">Category</td>
+                    <td th:text="${ad.subCate}">Sub Category</td>
+                    <td><a href="#" th:href="@{view(uid=${ad.uid},page=${paging.page},searchWord=${paging.searchWord})}" id="title" th:text="${ad.title}">Title</a></td>
+                    <td th:text="${ad.regDate}">Date</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="main-form right">
+            <button type="button" onclick="location.href='write'">글쓰기</button>
+        </div>
+        <div class="clear"></div>
+        <!-- paging -->
+        <div class="paging_wrap" th:if="${#lists.size(list) != 0}">
+            <ul id="paging" class="paging">
+                <li th:if="${paging.prev}"><a href="#" th:href="${paging.startPage}">Prev</a></li>
+                <li th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                    <a href="#" th:href="@{list(page=${page},searchWord=${paging.searchWord})}" th:text="${page}"></a>
+                </li>
+<!--                <c:forEach var="pageNum" begin="${paging.startPage}" end="${paging.endPage">-->
+<!--                    <li class="paging_btn"><a href="${pageNum}" class="a_page"></a></li>-->
+<!--                </c:forEach>-->
+                <li th:if="${paging.next}"><a href="#" th:href="list?page=${paging.endPage + 1}">Next</a></li>
+            </ul>
+        </div>
+    </main>
+    <footer></footer>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function enterKey() {
+        if (window.event.keyCode == 13) {
+            search();
+        }
+    }
+
+    function search() {
+        const searchWord = document.getElementById('searchWord').value;
+        const page = /*[[${paging.page}]]*/;
+
+        location.href='list?page=' + page + '&searchWord=' + searchWord;
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

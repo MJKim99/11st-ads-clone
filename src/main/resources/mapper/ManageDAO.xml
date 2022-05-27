@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eleven.board.dao.ManageAdDAO">
+    <select id="manageAdList" resultType="com.eleven.board.domain.ManageAd">
+        select uid, category, sub_cate as subcate, title, regdate
+        from ads_manage
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="category != null">
+                and category = #{category}
+            </if>
+            <if test="searchWord != null">
+                and title like concat('%', #{searchWord}, '%')
+            </if>
+        </trim>
+        order by uid DESC
+        limit #{start}, #{end}
+    </select>
+    
+    <select id="getTotal" resultType="Integer">
+        select count(uid) from ads_manage;
+    </select>
+
+    <select id="getSearchTotal" resultType="Integer">
+        select count(uid) from ads_manage where title like concat('%', #{searchWord}, '%')
+    </select>
+
+    <select id="selectByUid" parameterType="Integer" resultType="com.eleven.board.domain.ManageAd">
+        select uid, category, sub_cate as subcate, title, content, regdate
+        from ads_manage
+        where uid = #{uid}
+    </select>
+
+    <insert id="insertAd" parameterType="com.eleven.board.domain.ManageAd"
+    flushCache="true" useGeneratedKeys="true" keyProperty="uid">
+        insert into ads_manage (category, sub_cate, title, content)
+        values (#{category}, #{subCate}, #{title}, #{content})
+    </insert>
+
+    <update id="updateAd" parameterType="com.eleven.board.domain.ManageAd" flushCache="true">
+        update ads_manage
+        set
+            title = #{title},
+            category = #{category},
+            sub_cate = #{subCate},
+            content = #{content}
+        where uid = #{uid}
+    </update>
+
+    <delete id="deleteByUid" parameterType="Integer" flushCache="true">
+        delete from ads_manage where uid = #{uid}
+    </delete>
+</mapper>
+

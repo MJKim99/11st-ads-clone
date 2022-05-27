@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${ad.title}">Title</title>
+</head>
+<body>
+<article>
+    <p id="categorys" th:text="${ad.category} + ' | ' + ${ad.subCate}">Category | Sub Category</p>
+    <p id="title" th:text="${ad.title}">Title</p>
+    <p id="content" th:text="${ad.content}">Content</p>
+</article>
+<button type="button" th:onclick="|location.href='@{list(page=${page},searchWord=${searchWord})}'|">목록으로</button>
+<button type="button" th:onclick="|location.href='@{update(uid=${ad.uid})}'|">수정하기</button>
+<button type="button" th:onclick="|chkDelete(${ad.uid})|">삭제하기</button>
+
+<script>
+window.onpopstate = function(event) {
+    if (event) {
+
+    }
+}
+
+function chkDelete(uid) {
+    const r = confirm("삭제하시겠습니까?");
+    if (r) {
+        location.href="deleteOk?uid=" + uid;
+    }
+}
+</script>
+</body>
+</html>
