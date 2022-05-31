@@ -32,10 +32,11 @@ public class FileController {
             Resource resource = resourceLoader.getResource("Devroot/temp/" + fileName);
             File file = resource.getFile();
 
+
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, file.getName())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + file.getName() + "\"")
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())
+                    .contentType(MediaType.APPLICATION_PDF)
                     .body(resource);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

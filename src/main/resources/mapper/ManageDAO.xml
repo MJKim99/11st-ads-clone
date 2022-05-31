@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.eleven.board.dao.ManageAdDAO">
     <select id="manageAdList" resultType="com.eleven.board.domain.ManageAd">
-        select uid, adm_cate_th1_cd as category, adm_cate_th2_cd as subcate, title, regdate
-        from ads_manage
+        select am.uid
+            , (select p.cmm_cd_nm from pc p where p.grp_cd = 'adm_cate_th1_cd' and am.adm_cate_th1_cd = p.cmm_cd) as category
+            , (select p.cmm_cd_nm from pc p where p.grp_cd = 'adm_cate_th2_cd' and am.adm_cate_th2_cd = p.cmm_cd) as subcate
+            , am.title
+            , am.regdate
+        from ads_manage am
         <trim prefix="where" prefixOverrides="and | or">
             <if test="category != null">
                 and category = #{category}
@@ -26,22 +30,15 @@
 
     <select id="selectByUid" parameterType="Integer" resultType="com.eleven.board.domain.ManageAd">
         select
-            am.uid,
-            p1.cmm_cd_nm as category,
-            p2.cmm_cd_nm as subCate,
-            am.title,
-            am.content,
-            am.regdate,
-            am.filepath
+            am.uid
+            , (select p.cmm_cd_nm from pc p where p.grp_cd = 'adm_cate_th1_cd' and am.adm_cate_th1_cd = p.cmm_cd) as category
+            , (select p.cmm_cd_nm from pc p where p.grp_cd = 'adm_cate_th2_cd' and am.adm_cate_th2_cd = p.cmm_cd) as subCate
+            , am.title
+            , am.content
+            , am.regdate
+            , am.filepath
         from ads_manage am
-        join pc p1
-          on p1.cmm_cd = am.adm_cate_th1_cd
-        join pc p2
-          on p2.cmm_cd = am.adm_cate_th2_cd
-        where
-            p1.grp_cd = 'adm_cate_th1_cd'
-        and p2.grp_cd = 'adm_cate_th2_cd'
-        and uid = #{uid}
+        where uid = #{uid}
     </select>
 
     <insert id="insertAd" parameterType="com.eleven.board.domain.ManageAd"
