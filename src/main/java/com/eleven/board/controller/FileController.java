@@ -29,12 +29,12 @@ public class FileController {
     @RequestMapping("/{fileName}")
     public ResponseEntity<Resource> resourceFileDownload(@PathVariable String fileName) {
         try {
-            Resource resource = resourceLoader.getResource("Devroot/temp/" + fileName);
+            Resource resource = resourceLoader.getResource("file:///C:/Devroot/temp/" + fileName);
             File file = resource.getFile();
 
 
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + file.getName() + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(resource);
