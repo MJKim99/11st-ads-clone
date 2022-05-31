@@ -32,10 +32,10 @@ public class ManageController {
             paging = new Paging(manageService.getTotal(), page);
         } else {
             paging = new Paging(manageService.getSearchTotal(searchWord), page, searchWord);
-            System.out.println("controller : " + manageService.getSearchTotal(searchWord));
         }
 
         System.out.println("paging: " + paging.toString());
+
         model.addAttribute("list", manageService.manageAdList(paging));
         model.addAttribute("paging", paging);
         return "manage/adList";

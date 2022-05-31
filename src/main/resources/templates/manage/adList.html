@@ -26,7 +26,7 @@
     <main>
         <h1>광고소식</h1>
         <h3>11번가 광고의 다양한 소식을 확인하세요.</h3>
-        <input type="text" id="searchWord" name="searchWord" placeholder="검색어를 입력하세요" onkeyup="enterKey();"/>
+        <input type="text" id="searchWord" name="searchWord" th:value="${paging.searchWord}" placeholder="검색어를 입력하세요" onkeyup="enterKey();"/>
         <button type="button" onclick="search();">검색</button>
         <br>
         <!-- <div class="clear"></div>

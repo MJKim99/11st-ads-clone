@@ -37,7 +37,6 @@ public class Paging {
     public Paging(int totalRecord, int page, String searchWord) {
         this.page = page;
         this.totalRecord = totalRecord;
-        System.out.println("totalRecord: " + this.totalRecord);
         this.searchWord = searchWord;
         initPaging();
     }
@@ -47,7 +46,6 @@ public class Paging {
         endPage = (int) (Math.ceil(page / 10.0)) * 10;
 
         totalPage = (int) (Math.ceil((double) totalRecord / range));
-        System.out.println("last: " + totalPage);
         if (endPage > totalPage) {
             endPage = totalPage;
         }
