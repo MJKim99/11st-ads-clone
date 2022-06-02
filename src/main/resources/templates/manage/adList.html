@@ -67,14 +67,14 @@
         <!-- paging -->
         <div class="paging_wrap" th:if="${#lists.size(list) != 0}">
             <ul id="paging" class="paging">
-                <li th:if="${paging.prev}"><a href="#" th:href="${paging.startPage}">Prev</a></li>
+                <li th:if=${paging.prev}><a href="#" th:href="@{list(page=${paging.startPage - 1})}">Prev</a></li>
                 <li th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
                     <a href="#" th:href="@{list(page=${page},searchWord=${paging.searchWord})}" th:text="${page}"></a>
                 </li>
 <!--                <c:forEach var="pageNum" begin="${paging.startPage}" end="${paging.endPage">-->
 <!--                    <li class="paging_btn"><a href="${pageNum}" class="a_page"></a></li>-->
 <!--                </c:forEach>-->
-                <li th:if="${paging.next}"><a href="#" th:href="list?page=${paging.endPage + 1}">Next</a></li>
+                <li th:if=${paging.next}><a href="#" th:href="@{list(page=${paging.endPage + 1})}">Next</a></li>
             </ul>
         </div>
     </main>

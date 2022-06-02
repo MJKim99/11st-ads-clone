@@ -43,7 +43,7 @@ public class Paging {
 
     public void initPaging() {
         //마지막 페이지, 전체 페이지 중 마지막 페이지 계산
-        endPage = (int) (Math.ceil(page / 10.0)) * 10;
+        endPage = (int) (Math.ceil(page / (double) range)) * range;
 
         totalPage = (int) (Math.ceil((double) totalRecord / range));
         if (endPage > totalPage) {
