@@ -17,7 +17,7 @@
             </if>
         </trim>
         order by uid DESC
-        limit #{start}, #{end}
+        limit #{start}, 5
     </select>
     
     <select id="getTotal" resultType="Integer">
